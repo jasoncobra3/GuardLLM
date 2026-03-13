@@ -3,7 +3,7 @@ requires = ["setuptools>=68.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "guardllm"
+name = "guardllm-safety"
 version = "0.1.0"
 description = "A Responsible AI toolkit for LLM applications providing safety, governance, and observability features"
 readme = "README.md"
@@ -39,11 +39,11 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/GuardLLM/guardllm"
+Homepage = "https://github.com/jasoncobra3/GuardLLM"
 Documentation = "https://guardllm.readthedocs.io"
-Repository = "https://github.com/GuardLLM/guardllm.git"
-Issues = "https://github.com/GuardLLM/guardllm/issues"
-Changelog = "https://github.com/GuardLLM/guardllm/releases"
+Repository = "https://github.com/jasoncobra3/GuardLLM.git"
+Issues = "https://github.com/jasoncobra3/GuardLLM/issues"
+Changelog = "https://github.com/jasoncobra3/GuardLLM/releases"
 
 [project.optional-dependencies]
 dev = [
