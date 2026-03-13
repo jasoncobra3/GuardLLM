@@ -1,8 +1,9 @@
 # GuardLLM
 
-[![PyPI version](https://badge.fury.io/py/guardllm.svg)](https://badge.fury.io/py/guardllm)
-[![Python versions](https://img.shields.io/pypi/pyversions/guardllm.svg)](https://pypi.org/project/guardllm/)
+[![PyPI version](https://badge.fury.io/py/guardllm-safety.svg)](https://pypi.org/project/guardllm-safety/)
+[![Python versions](https://img.shields.io/pypi/pyversions/guardllm-safety.svg)](https://pypi.org/project/guardllm-safety/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://github.com/jasoncobra3/GuardLLM/actions/workflows/tests.yml/badge.svg)](https://github.com/jasoncobra3/GuardLLM/actions)
 
 A Responsible AI toolkit for LLM applications providing **safety**, **governance**, and **observability** features.
 
@@ -26,26 +27,27 @@ GuardLLM is a comprehensive library designed to help developers build safer, mor
 
 ## Installation
 
-### From PyPI
+### From PyPI (Recommended)
 
 ```bash
-pip install guardllm
+pip install guardllm-safety
 ```
 
 ### From Source
 
 ```bash
-git clone https://github.com/GuardLLM/guardllm.git
-cd guardllm
+git clone https://github.com/jasoncobra3/GuardLLM.git
+cd GuardLLM
 pip install -e .
 ```
 
 ### Development Installation
 
 ```bash
-git clone https://github.com/GuardLLM/guardllm.git
-cd guardllm
+git clone https://github.com/jasoncobra3/GuardLLM.git
+cd GuardLLM
 pip install -e ".[dev]"
+pytest tests/
 ```
 
 ## Quick Start
@@ -117,9 +119,10 @@ This project is licensed under the MIT License - see [LICENSE](LICENSE) file for
 
 ## Support
 
-- 📖 [Documentation](https://guardllm.readthedocs.io)
-- 🐛 [Issue Tracker](https://github.com/GuardLLM/guardllm/issues)
-- 💬 [Discussions](https://github.com/GuardLLM/guardllm/discussions)
+- � [PyPI Package](https://pypi.org/project/guardllm-safety/)
+- 📖 [Documentation](docs/getting_started.md)
+- 🐛 [Issue Tracker](https://github.com/jasoncobra3/GuardLLM/issues)
+- 💬 [Discussions](https://github.com/jasoncobra3/GuardLLM/discussions)
 
 ## Citation
 
@@ -128,9 +131,9 @@ If you use GuardLLM in your research, please cite:
 ```bibtex
 @software{guardllm2024,
   title={GuardLLM: A Responsible AI Toolkit for LLM Applications},
-  author={GuardLLM Contributors},
+  author={Aniket},
   year={2024},
-  url={https://github.com/GuardLLM/guardllm}
+  url={https://github.com/jasoncobra3/GuardLLM}
 }
 ```
 

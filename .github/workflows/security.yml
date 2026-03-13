@@ -1,0 +1,32 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install bandit safety
+
+    - name: Security check with Bandit
+      run: bandit -r guardllm -f json -o bandit-report.json
+      continue-on-error: true
+
+    - name: Check dependencies with Safety
+      run: safety check --json
+      continue-on-error: true
