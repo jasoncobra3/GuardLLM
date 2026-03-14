@@ -31,6 +31,7 @@ Example:
 """
 
 from guardllm.config import GuardConfig, GuardConfigBuilder
+from guardllm.core import GuardReport
 from guardllm.exceptions import (
     ConfigurationError,
     DetectionError,
@@ -40,7 +41,6 @@ from guardllm.exceptions import (
     ScanError,
     ValidationError,
 )
-from guardllm.core import GuardReport
 from guardllm.guard import Guard
 from guardllm.observability import AuditLogger
 

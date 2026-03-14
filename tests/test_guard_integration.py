@@ -5,7 +5,8 @@ Tests the complete Guard functionality with all detectors integrated.
 """
 
 import pytest
-from guardllm import Guard, GuardConfig, GuardConfigBuilder
+
+from guardllm import Guard, GuardConfigBuilder
 from guardllm.core import GuardReport
 
 

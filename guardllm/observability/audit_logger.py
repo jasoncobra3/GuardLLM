@@ -8,8 +8,7 @@ detection events, and generating audit trails for compliance and debugging.
 import json
 import logging
 from datetime import datetime
-from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 from guardllm.core import GuardReport
 
@@ -82,13 +81,13 @@ class AuditLogger:
                 formatter = logging.Formatter(self.DEFAULT_LOG_FORMAT)
                 file_handler.setFormatter(formatter)
                 self._logger.addHandler(file_handler)
-            except IOError as e:
+            except OSError as e:
                 self._logger.warning(f"Failed to open log file {log_file_path}: {e}")
 
         # In-memory log storage for exports
-        self._log_entries: List[Dict[str, Any]] = []
+        self._log_entries: list[dict[str, Any]] = []
 
-    def log_scan(self, report: GuardReport, metadata: Optional[Dict[str, Any]] = None) -> None:
+    def log_scan(self, report: GuardReport, metadata: Optional[dict[str, Any]] = None) -> None:
         """
         Log a complete scan with results.
 
@@ -142,7 +141,7 @@ class AuditLogger:
         self._logger.info(log_message)
 
     def log_detection(
-        self, detection_type: str, result: bool, details: Optional[Dict[str, Any]] = None
+        self, detection_type: str, result: bool, details: Optional[dict[str, Any]] = None
     ) -> None:
         """
         Log individual detection event.
@@ -214,7 +213,7 @@ class AuditLogger:
         else:
             raise ValueError(f"Unknown format: {format}. Use 'json' or 'text'")
 
-    def get_log_statistics(self) -> Dict[str, Any]:
+    def get_log_statistics(self) -> dict[str, Any]:
         """
         Get statistics about logged events.
 
@@ -262,7 +261,7 @@ class AuditLogger:
         """
         self._log_entries.clear()
 
-    def get_recent_scans(self, limit: int = 10) -> List[Dict[str, Any]]:
+    def get_recent_scans(self, limit: int = 10) -> list[dict[str, Any]]:
         """
         Get the most recent scan logs.
 
@@ -279,7 +278,7 @@ class AuditLogger:
         scans = [entry for entry in self._log_entries if entry["event_type"] == "scan"]
         return scans[-limit:]
 
-    def get_detection_timeline(self, detection_type: Optional[str] = None) -> List[Dict[str, Any]]:
+    def get_detection_timeline(self, detection_type: Optional[str] = None) -> list[dict[str, Any]]:
         """
         Get detection events with optional filtering.
 
@@ -321,10 +320,10 @@ class AuditLogger:
             content = self.export_logs(format=format)
             with open(file_path, "w") as f:
                 f.write(content)
-        except IOError as e:
-            raise IOError(f"Failed to write logs to {file_path}: {e}")
+        except OSError as e:
+            raise OSError(f"Failed to write logs to {file_path}: {e}") from e
 
-    def get_high_risk_events(self, threshold: float = 0.7) -> List[Dict[str, Any]]:
+    def get_high_risk_events(self, threshold: float = 0.7) -> list[dict[str, Any]]:
         """
         Get all high-risk scan events above threshold.
 

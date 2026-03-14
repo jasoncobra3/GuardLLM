@@ -12,7 +12,6 @@ This module provides detection capabilities for common PII patterns including:
 """
 
 import re
-from typing import Dict, List
 
 
 class PIIDetector:
@@ -55,9 +54,9 @@ class PIIDetector:
 
         Sets up the detector with predefined regex patterns for PII detection.
         """
-        self._custom_patterns: Dict[str, re.Pattern] = {}
+        self._custom_patterns: dict[str, re.Pattern] = {}
 
-    def detect(self, text: str) -> Dict[str, List[str]]:
+    def detect(self, text: str) -> dict[str, list[str]]:
         """
         Detect PII in the provided text.
 
@@ -77,7 +76,7 @@ class PIIDetector:
             >>> print(result)
             {"email": ["john@example.com"]}
         """
-        results: Dict[str, List[str]] = {}
+        results: dict[str, list[str]] = {}
 
         # Search all standard patterns
         for pattern_type, pattern in self.PATTERNS.items():
@@ -165,7 +164,7 @@ class PIIDetector:
             compiled_pattern = re.compile(regex_pattern)
             self._custom_patterns[pattern_name] = compiled_pattern
         except re.error as e:
-            raise ValueError(f"Invalid regex pattern: {e}")
+            raise ValueError(f"Invalid regex pattern: {e}") from e
 
     def remove_custom_pattern(self, pattern_name: str) -> bool:
         r"""
@@ -188,7 +187,7 @@ class PIIDetector:
             return True
         return False
 
-    def get_pattern_types(self) -> List[str]:
+    def get_pattern_types(self) -> list[str]:
         """
         Get list of all available PII pattern types.
 
@@ -226,7 +225,7 @@ class PIIDetector:
         masked_text = text
         detected = self.detect(text)
 
-        for pii_type, matches in detected.items():
+        for _pii_type, matches in detected.items():
             for match in matches:
                 # Create mask of same length as detected value
                 masked_value = mask_char * len(match)

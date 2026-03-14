@@ -5,8 +5,6 @@ The Guard class serves as the primary entry point for scanning and analyzing
 LLM prompts and responses for safety, governance, and observability concerns.
 """
 
-from typing import Dict, List
-
 from guardllm.core import GuardReport
 from guardllm.safety.injection_detector import PromptInjectionDetector
 from guardllm.safety.pii_detector import PIIDetector
@@ -102,7 +100,7 @@ class Guard:
 
         return report
 
-    def detect_pii(self, text: str) -> Dict[str, List[str]]:
+    def detect_pii(self, text: str) -> dict[str, list[str]]:
         """
         Detect Personally Identifiable Information (PII) in text.
 

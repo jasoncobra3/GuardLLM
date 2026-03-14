@@ -5,7 +5,7 @@ This module provides risk scoring capabilities by aggregating detected security
 issues and calculating an overall risk score between 0.0 and 1.0.
 """
 
-from typing import Dict, List, Optional
+from typing import Optional
 
 
 class RiskScorer:
@@ -22,12 +22,12 @@ class RiskScorer:
     """
 
     # Default risk weights for different issue types
-    DEFAULT_WEIGHTS: Dict[str, float] = {
+    DEFAULT_WEIGHTS: dict[str, float] = {
         "prompt_injection": 0.6,
         "pii_detected": 0.4,
     }
 
-    def __init__(self, custom_weights: Optional[Dict[str, float]] = None) -> None:
+    def __init__(self, custom_weights: Optional[dict[str, float]] = None) -> None:
         """
         Initialize the RiskScorer instance.
 
@@ -44,7 +44,7 @@ class RiskScorer:
         if custom_weights:
             self._weights.update(custom_weights)
 
-    def score(self, issues: List[str], weights: Optional[Dict[str, float]] = None) -> float:
+    def score(self, issues: list[str], weights: Optional[dict[str, float]] = None) -> float:
         """
         Calculate risk score from a list of detected issues.
 
@@ -86,8 +86,8 @@ class RiskScorer:
         self,
         pii_detected: bool = False,
         injection_detected: bool = False,
-        additional_issues: Optional[Dict[str, bool]] = None,
-        weights: Optional[Dict[str, float]] = None,
+        additional_issues: Optional[dict[str, bool]] = None,
+        weights: Optional[dict[str, float]] = None,
     ) -> float:
         """
         Calculate risk score from individual detection results.
@@ -180,7 +180,7 @@ class RiskScorer:
 
         return False
 
-    def get_weights(self) -> Dict[str, float]:
+    def get_weights(self) -> dict[str, float]:
         """
         Get current scoring weights.
 

@@ -5,7 +5,7 @@ Provides configuration classes and settings for customizing Guard behavior.
 """
 
 from dataclasses import dataclass, field
-from typing import Dict, Optional
+from typing import Optional
 
 
 @dataclass
@@ -32,8 +32,8 @@ class GuardConfig:
     enable_injection_detection: bool = True
     enable_audit_logging: bool = False
 
-    custom_pii_patterns: Dict[str, str] = field(default_factory=dict)
-    custom_scoring_weights: Dict[str, float] = field(default_factory=dict)
+    custom_pii_patterns: dict[str, str] = field(default_factory=dict)
+    custom_scoring_weights: dict[str, float] = field(default_factory=dict)
 
     log_file_path: Optional[str] = None
     log_to_console: bool = True
@@ -78,7 +78,7 @@ class GuardConfig:
         if self.log_file_path and not isinstance(self.log_file_path, str):
             raise ValueError("log_file_path must be string or None")
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict:
         """
         Convert configuration to dictionary.
 
@@ -102,7 +102,7 @@ class GuardConfig:
         }
 
     @staticmethod
-    def from_dict(config_dict: Dict) -> "GuardConfig":
+    def from_dict(config_dict: dict) -> "GuardConfig":
         """
         Create configuration from dictionary.
 
@@ -127,7 +127,7 @@ class GuardConfig:
             config.validate()
             return config
         except TypeError as e:
-            raise ValueError(f"Invalid configuration: {e}")
+            raise ValueError(f"Invalid configuration: {e}") from e
 
 
 class GuardConfigBuilder:

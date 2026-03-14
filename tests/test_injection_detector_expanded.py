@@ -6,6 +6,7 @@ jailbreak attempts, and various safety bypass techniques.
 """
 
 import pytest
+
 from guardllm.safety.injection_detector import PromptInjectionDetector
 
 

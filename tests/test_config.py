@@ -5,8 +5,8 @@ Tests configuration management, validation, and builder patterns.
 """
 
 import pytest
+
 from guardllm.config import GuardConfig, GuardConfigBuilder
-from guardllm.exceptions import ConfigurationError
 
 
 class TestGuardConfigBasic:

@@ -6,6 +6,7 @@ and risk level categorization.
 """
 
 import pytest
+
 from guardllm.safety.risk_scorer import RiskScorer
 
 

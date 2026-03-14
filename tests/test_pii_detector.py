@@ -6,6 +6,7 @@ supported PII types.
 """
 
 import pytest
+
 from guardllm.safety.pii_detector import PIIDetector
 
 
