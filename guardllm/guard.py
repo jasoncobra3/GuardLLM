@@ -88,8 +88,7 @@ class Guard:
 
         # Calculate risk score using RiskScorer
         risk_score = self._risk_scorer.score_from_detections(
-            pii_detected=pii_detected,
-            injection_detected=injection_detected
+            pii_detected=pii_detected, injection_detected=injection_detected
         )
 
         # Create and return report
@@ -182,4 +181,3 @@ class Guard:
             >>> print(f"Risk level: {level}")
         """
         return self._risk_scorer.get_risk_level(risk_score)
-

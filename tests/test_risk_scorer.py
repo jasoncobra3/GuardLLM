@@ -81,18 +81,14 @@ class TestScoreFromDetections:
 
     def test_from_detections_both(self, scorer: RiskScorer) -> None:
         """Test from_detections with both types"""
-        score = scorer.score_from_detections(
-            pii_detected=True,
-            injection_detected=True
-        )
+        score = scorer.score_from_detections(pii_detected=True, injection_detected=True)
         assert score == 1.0
 
     def test_from_detections_additional_issues(self, scorer: RiskScorer) -> None:
         """Test from_detections with additional custom issues"""
         scorer.set_weight("custom_issue", 0.3)
         score = scorer.score_from_detections(
-            injection_detected=True,
-            additional_issues={"custom_issue": True}
+            injection_detected=True, additional_issues={"custom_issue": True}
         )
         assert score == pytest.approx(0.9)  # 0.6 + 0.3
 
@@ -150,7 +146,7 @@ class TestWeightManagement:
         scorer.set_weight("prompt_injection", 0.9)
         scorer.set_weight("custom", 0.5)
         scorer.reset_weights()
-        
+
         weights = scorer.get_weights()
         assert weights["prompt_injection"] == 0.6  # Back to default
         assert "custom" not in weights  # Custom removed
@@ -270,10 +266,7 @@ class TestOverrideWeights:
     def test_override_in_from_detections(self, scorer: RiskScorer) -> None:
         """Test weight override in score_from_detections"""
         override_weights = {"pii_detected": 0.8}
-        score = scorer.score_from_detections(
-            pii_detected=True,
-            weights=override_weights
-        )
+        score = scorer.score_from_detections(pii_detected=True, weights=override_weights)
         assert score == 0.8
 
 

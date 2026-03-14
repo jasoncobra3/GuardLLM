@@ -20,9 +20,9 @@ class TestGuardIntegration:
     def test_guard_initialization(self, guard: Guard) -> None:
         """Test Guard initializes correctly"""
         assert guard is not None
-        assert hasattr(guard, '_pii_detector')
-        assert hasattr(guard, '_injection_detector')
-        assert hasattr(guard, '_risk_scorer')
+        assert hasattr(guard, "_pii_detector")
+        assert hasattr(guard, "_injection_detector")
+        assert hasattr(guard, "_risk_scorer")
 
     def test_scan_clean_prompt(self, guard: Guard) -> None:
         """Test scanning a clean, safe prompt"""
@@ -103,11 +103,13 @@ class TestGuardWithConfig:
 
     def test_guard_respects_config_builder(self) -> None:
         """Test Guard respects configured settings"""
-        config = (GuardConfigBuilder()
-                  .with_pii_detection(True)
-                  .with_injection_detection(True)
-                  .with_audit_logging(False)
-                  .build())
+        config = (
+            GuardConfigBuilder()
+            .with_pii_detection(True)
+            .with_injection_detection(True)
+            .with_audit_logging(False)
+            .build()
+        )
 
         assert config.enable_pii_detection is True
         assert config.enable_injection_detection is True
@@ -236,6 +238,7 @@ class TestPerformance:
         prompt = "This is a test prompt for performance testing"
 
         import time
+
         start = time.time()
         for _ in range(100):
             guard.scan(prompt)
@@ -247,6 +250,7 @@ class TestPerformance:
     def test_multiple_guards(self) -> None:
         """Test creating multiple Guard instances"""
         import time
+
         start = time.time()
         guards = [Guard() for _ in range(100)]
         elapsed = time.time() - start

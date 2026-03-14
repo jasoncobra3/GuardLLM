@@ -25,9 +25,7 @@ class TestGuardConfigBasic:
     def test_custom_config(self) -> None:
         """Test custom configuration"""
         config = GuardConfig(
-            enable_pii_detection=False,
-            enable_audit_logging=True,
-            log_file_path="/tmp/audit.log"
+            enable_pii_detection=False, enable_audit_logging=True, log_file_path="/tmp/audit.log"
         )
         assert config.enable_pii_detection is False
         assert config.enable_audit_logging is True
@@ -37,7 +35,7 @@ class TestGuardConfigBasic:
         """Test config with custom patterns"""
         config = GuardConfig(
             custom_pii_patterns={"employee_id": r"EMP\d{6}"},
-            custom_scoring_weights={"injection": 0.8}
+            custom_scoring_weights={"injection": 0.8},
         )
         assert "employee_id" in config.custom_pii_patterns
         assert config.custom_scoring_weights["injection"] == 0.8
@@ -89,7 +87,7 @@ class TestConfigSerialization:
         config = GuardConfig(
             enable_pii_detection=False,
             log_file_path="/var/log/audit.log",
-            custom_scoring_weights={"custom": 0.5}
+            custom_scoring_weights={"custom": 0.5},
         )
         config_dict = config.to_dict()
 
@@ -103,7 +101,7 @@ class TestConfigSerialization:
             "enable_pii_detection": False,
             "enable_injection_detection": True,
             "log_file_path": "/tmp/test.log",
-            "custom_scoring_weights": {"test": 0.5}
+            "custom_scoring_weights": {"test": 0.5},
         }
         config = GuardConfig.from_dict(config_dict)
 
@@ -113,10 +111,7 @@ class TestConfigSerialization:
 
     def test_from_dict_validation(self) -> None:
         """Test that from_dict validates configuration"""
-        config_dict = {
-            "enable_pii_detection": True,
-            "custom_scoring_weights": {"invalid": -1.0}
-        }
+        config_dict = {"enable_pii_detection": True, "custom_scoring_weights": {"invalid": -1.0}}
         with pytest.raises(ValueError):
             GuardConfig.from_dict(config_dict)
 
@@ -126,7 +121,7 @@ class TestConfigSerialization:
             enable_pii_detection=False,
             enable_audit_logging=True,
             log_file_path="/var/log/test.log",
-            custom_scoring_weights={"a": 0.5, "b": 0.3}
+            custom_scoring_weights={"a": 0.5, "b": 0.3},
         )
 
         config_dict = original.to_dict()
@@ -142,21 +137,22 @@ class TestGuardConfigBuilder:
 
     def test_builder_basic(self) -> None:
         """Test basic builder usage"""
-        config = (GuardConfigBuilder()
-                  .with_pii_detection(False)
-                  .with_injection_detection(True)
-                  .build())
+        config = (
+            GuardConfigBuilder().with_pii_detection(False).with_injection_detection(True).build()
+        )
 
         assert config.enable_pii_detection is False
         assert config.enable_injection_detection is True
 
     def test_builder_with_logging(self) -> None:
         """Test builder with logging configuration"""
-        config = (GuardConfigBuilder()
-                  .with_audit_logging(True)
-                  .with_log_file("/var/log/audit.log")
-                  .with_log_to_console(False)
-                  .build())
+        config = (
+            GuardConfigBuilder()
+            .with_audit_logging(True)
+            .with_log_file("/var/log/audit.log")
+            .with_log_to_console(False)
+            .build()
+        )
 
         assert config.enable_audit_logging is True
         assert config.log_file_path == "/var/log/audit.log"
@@ -164,35 +160,41 @@ class TestGuardConfigBuilder:
 
     def test_builder_with_custom_patterns(self) -> None:
         """Test builder with custom patterns"""
-        config = (GuardConfigBuilder()
-                  .with_custom_pii_pattern("employee_id", r"EMP\d{6}")
-                  .with_custom_pii_pattern("department", r"DEPT\d{3}")
-                  .build())
+        config = (
+            GuardConfigBuilder()
+            .with_custom_pii_pattern("employee_id", r"EMP\d{6}")
+            .with_custom_pii_pattern("department", r"DEPT\d{3}")
+            .build()
+        )
 
         assert len(config.custom_pii_patterns) == 2
         assert config.custom_pii_patterns["employee_id"] == r"EMP\d{6}"
 
     def test_builder_with_weights(self) -> None:
         """Test builder with scoring weights"""
-        config = (GuardConfigBuilder()
-                  .with_custom_scoring_weight("critical_threat", 0.9)
-                  .with_custom_scoring_weight("warning", 0.3)
-                  .build())
+        config = (
+            GuardConfigBuilder()
+            .with_custom_scoring_weight("critical_threat", 0.9)
+            .with_custom_scoring_weight("warning", 0.3)
+            .build()
+        )
 
         assert config.custom_scoring_weights["critical_threat"] == 0.9
         assert config.custom_scoring_weights["warning"] == 0.3
 
     def test_builder_chaining(self) -> None:
         """Test method chaining"""
-        config = (GuardConfigBuilder()
-                  .with_pii_detection(True)
-                  .with_injection_detection(True)
-                  .with_audit_logging(True)
-                  .with_log_file("/var/log/guard.log")
-                  .with_sensitive_data_redaction(True)
-                  .with_custom_pii_pattern("ssn", r"\d{3}-\d{2}-\d{4}")
-                  .with_custom_scoring_weight("injection", 0.8)
-                  .build())
+        config = (
+            GuardConfigBuilder()
+            .with_pii_detection(True)
+            .with_injection_detection(True)
+            .with_audit_logging(True)
+            .with_log_file("/var/log/guard.log")
+            .with_sensitive_data_redaction(True)
+            .with_custom_pii_pattern("ssn", r"\d{3}-\d{2}-\d{4}")
+            .with_custom_scoring_weight("injection", 0.8)
+            .build()
+        )
 
         assert config.enable_pii_detection is True
         assert config.enable_injection_detection is True
@@ -210,9 +212,7 @@ class TestGuardConfigBuilder:
 
     def test_builder_redaction_setting(self) -> None:
         """Test builder redaction setting"""
-        config = (GuardConfigBuilder()
-                  .with_sensitive_data_redaction(False)
-                  .build())
+        config = GuardConfigBuilder().with_sensitive_data_redaction(False).build()
 
         assert config.redact_sensitive_data is False
 

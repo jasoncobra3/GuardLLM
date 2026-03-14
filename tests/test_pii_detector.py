@@ -25,9 +25,7 @@ class TestPIIDetectorBasic:
 
     def test_email_multiple(self, detector: PIIDetector) -> None:
         """Test detection of multiple email addresses"""
-        result = detector.detect(
-            "Email alice@example.com or bob@test.org for help"
-        )
+        result = detector.detect("Email alice@example.com or bob@test.org for help")
         assert "email" in result
         assert len(result["email"]) == 2
 
@@ -215,6 +213,7 @@ class TestPerformance:
     def test_detector_initialization(self) -> None:
         """Test detector initialization is fast"""
         import time
+
         start = time.time()
         for _ in range(100):
             PIIDetector()
@@ -226,8 +225,9 @@ class TestPerformance:
         """Test detection speed on text with PII"""
         detector = PIIDetector()
         text = "john@example.com " * 100
-        
+
         import time
+
         start = time.time()
         for _ in range(10):
             detector.detect(text)

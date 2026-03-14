@@ -42,9 +42,7 @@ class GuardReport:
             ValueError: If risk_score is not between 0.0 and 1.0
         """
         if not 0.0 <= self.risk_score <= 1.0:
-            raise ValueError(
-                f"risk_score must be between 0.0 and 1.0, got {self.risk_score}"
-            )
+            raise ValueError(f"risk_score must be between 0.0 and 1.0, got {self.risk_score}")
 
     def __str__(self) -> str:
         """

@@ -29,31 +29,14 @@ class PIIDetector:
 
     # Compiled regex patterns for efficient matching
     PATTERNS = {
-        "email": re.compile(
-            r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b",
-            re.IGNORECASE
-        ),
-        "phone_us": re.compile(
-            r"(?:\+?1[-.\s]?)?\(?[0-9]{3}\)?[-.\s]?[0-9]{3}[-.\s]?[0-9]{4}\b"
-        ),
-        "phone_international": re.compile(
-            r"(?:\+|00)?[1-9]\d{1,14}(?:[-.\s]?\d+)*\b"
-        ),
-        "credit_card_visa": re.compile(
-            r"\b4[0-9]{12}(?:[0-9]{3})?\b"
-        ),
-        "credit_card_mastercard": re.compile(
-            r"\b5[1-5][0-9]{14}\b"
-        ),
-        "credit_card_amex": re.compile(
-            r"\b3[47][0-9]{13}\b"
-        ),
-        "credit_card_discover": re.compile(
-            r"\b6(?:011|5[0-9]{2})[0-9]{12}\b"
-        ),
-        "ssn": re.compile(
-            r"\b(?!000|666|9\d{2})\d{3}-?(?!00)\d{2}-?(?!0000)\d{4}\b"
-        ),
+        "email": re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b", re.IGNORECASE),
+        "phone_us": re.compile(r"(?:\+?1[-.\s]?)?\(?[0-9]{3}\)?[-.\s]?[0-9]{3}[-.\s]?[0-9]{4}\b"),
+        "phone_international": re.compile(r"(?:\+|00)?[1-9]\d{1,14}(?:[-.\s]?\d+)*\b"),
+        "credit_card_visa": re.compile(r"\b4[0-9]{12}(?:[0-9]{3})?\b"),
+        "credit_card_mastercard": re.compile(r"\b5[1-5][0-9]{14}\b"),
+        "credit_card_amex": re.compile(r"\b3[47][0-9]{13}\b"),
+        "credit_card_discover": re.compile(r"\b6(?:011|5[0-9]{2})[0-9]{12}\b"),
+        "ssn": re.compile(r"\b(?!000|666|9\d{2})\d{3}-?(?!00)\d{2}-?(?!0000)\d{4}\b"),
         "api_key": re.compile(
             r"(?i)(?:api[_-]?key|apikey|api_secret|secret_key|access_token|bearer)\s*[=:\s]+\s*['\"]?([a-zA-Z0-9_\-]{20,})['\"]?"
         ),
@@ -63,9 +46,7 @@ class PIIDetector:
         "ipv6": re.compile(
             r"(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|::(?:[0-9a-fA-F]{1,4}:)*[0-9a-fA-F]{1,4}|[0-9a-fA-F]{1,4}::(?:[0-9a-fA-F]{1,4}:)*[0-9a-fA-F]{1,4}"
         ),
-        "passport": re.compile(
-            r"\b[A-Z]{1,2}\d{6,9}\b"
-        ),
+        "passport": re.compile(r"\b[A-Z]{1,2}\d{6,9}\b"),
     }
 
     def __init__(self) -> None:
@@ -105,7 +86,7 @@ class PIIDetector:
                 # Flatten matches (some patterns return groups)
                 if matches and isinstance(matches[0], tuple):
                     matches = [m[0] if isinstance(m, tuple) else m for m in matches]
-                
+
                 # Remove duplicates while preserving order
                 unique_matches = []
                 seen = set()
@@ -113,7 +94,7 @@ class PIIDetector:
                     if match not in seen:
                         unique_matches.append(match)
                         seen.add(match)
-                
+
                 if unique_matches:
                     results[pattern_type] = unique_matches
 
@@ -123,14 +104,14 @@ class PIIDetector:
             if matches:
                 if matches and isinstance(matches[0], tuple):
                     matches = [m[0] if isinstance(m, tuple) else m for m in matches]
-                
+
                 unique_matches = []
                 seen = set()
                 for match in matches:
                     if match not in seen:
                         unique_matches.append(match)
                         seen.add(match)
-                
+
                 if unique_matches:
                     results[f"custom_{custom_type}"] = unique_matches
 
@@ -179,7 +160,7 @@ class PIIDetector:
         """
         if not pattern_name:
             raise ValueError("pattern_name cannot be empty")
-        
+
         try:
             compiled_pattern = re.compile(regex_pattern)
             self._custom_patterns[pattern_name] = compiled_pattern

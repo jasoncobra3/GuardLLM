@@ -40,15 +40,11 @@ class RiskScorer:
             >>> custom_scorer = RiskScorer({"custom_issue": 0.5})
         """
         self._weights = self.DEFAULT_WEIGHTS.copy()
-        
+
         if custom_weights:
             self._weights.update(custom_weights)
 
-    def score(
-        self,
-        issues: List[str],
-        weights: Optional[Dict[str, float]] = None
-    ) -> float:
+    def score(self, issues: List[str], weights: Optional[Dict[str, float]] = None) -> float:
         """
         Calculate risk score from a list of detected issues.
 
@@ -91,7 +87,7 @@ class RiskScorer:
         pii_detected: bool = False,
         injection_detected: bool = False,
         additional_issues: Optional[Dict[str, bool]] = None,
-        weights: Optional[Dict[str, float]] = None
+        weights: Optional[Dict[str, float]] = None,
     ) -> float:
         """
         Calculate risk score from individual detection results.
@@ -121,7 +117,7 @@ class RiskScorer:
 
         if pii_detected:
             issues.append("pii_detected")
-        
+
         if injection_detected:
             issues.append("prompt_injection")
 
@@ -154,7 +150,7 @@ class RiskScorer:
         """
         if weight < 0:
             raise ValueError(f"Weight must be non-negative, got {weight}")
-        
+
         self._weights[issue_type] = weight
 
     def remove_weight(self, issue_type: str) -> bool:
@@ -181,7 +177,7 @@ class RiskScorer:
         if issue_type in self._weights:
             del self._weights[issue_type]
             return True
-        
+
         return False
 
     def get_weights(self) -> Dict[str, float]:
@@ -278,8 +274,7 @@ class RiskScorer:
 
         if risk_level not in thresholds:
             raise ValueError(
-                f"Unknown risk level: {risk_level}. "
-                f"Valid levels: {list(thresholds.keys())}"
+                f"Unknown risk level: {risk_level}. " f"Valid levels: {list(thresholds.keys())}"
             )
 
         return thresholds[risk_level]

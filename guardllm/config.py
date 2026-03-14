@@ -184,11 +184,7 @@ class GuardConfigBuilder:
         self._config.custom_pii_patterns[name] = pattern
         return self
 
-    def with_custom_scoring_weight(
-        self,
-        issue_type: str,
-        weight: float
-    ) -> "GuardConfigBuilder":
+    def with_custom_scoring_weight(self, issue_type: str, weight: float) -> "GuardConfigBuilder":
         """Set custom risk scoring weight."""
         self._config.custom_scoring_weights[issue_type] = weight
         return self

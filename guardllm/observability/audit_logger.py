@@ -88,11 +88,7 @@ class AuditLogger:
         # In-memory log storage for exports
         self._log_entries: List[Dict[str, Any]] = []
 
-    def log_scan(
-        self,
-        report: GuardReport,
-        metadata: Optional[Dict[str, Any]] = None
-    ) -> None:
+    def log_scan(self, report: GuardReport, metadata: Optional[Dict[str, Any]] = None) -> None:
         """
         Log a complete scan with results.
 
@@ -125,6 +121,7 @@ class AuditLogger:
         # Add prompt to log (optionally redacted)
         if self._redact_sensitive_data:
             from guardllm.safety.pii_detector import PIIDetector
+
             pii_detector = PIIDetector()
             prompt_text = pii_detector.mask_pii(report.prompt)
         else:
@@ -145,10 +142,7 @@ class AuditLogger:
         self._logger.info(log_message)
 
     def log_detection(
-        self,
-        detection_type: str,
-        result: bool,
-        details: Optional[Dict[str, Any]] = None
+        self, detection_type: str, result: bool, details: Optional[Dict[str, Any]] = None
     ) -> None:
         """
         Log individual detection event.
@@ -180,12 +174,10 @@ class AuditLogger:
         self._log_entries.append(entry)
 
         # Log to system logger
-        log_message = (
-            f"Detection[{detection_type}]: {result}"
-        )
+        log_message = f"Detection[{detection_type}]: {result}"
         if details:
             log_message += f" - {details}"
-        
+
         self._logger.info(log_message)
 
     def export_logs(self, format: str = "json") -> str:
@@ -284,16 +276,10 @@ class AuditLogger:
             >>> logger = AuditLogger()
             >>> recent = logger.get_recent_scans(limit=5)
         """
-        scans = [
-            entry for entry in self._log_entries
-            if entry["event_type"] == "scan"
-        ]
+        scans = [entry for entry in self._log_entries if entry["event_type"] == "scan"]
         return scans[-limit:]
 
-    def get_detection_timeline(
-        self,
-        detection_type: Optional[str] = None
-    ) -> List[Dict[str, Any]]:
+    def get_detection_timeline(self, detection_type: Optional[str] = None) -> List[Dict[str, Any]]:
         """
         Get detection events with optional filtering.
 
@@ -307,16 +293,10 @@ class AuditLogger:
             >>> logger = AuditLogger()
             >>> pii_detections = logger.get_detection_timeline("pii")
         """
-        detections = [
-            entry for entry in self._log_entries
-            if entry["event_type"] == "detection"
-        ]
+        detections = [entry for entry in self._log_entries if entry["event_type"] == "detection"]
 
         if detection_type:
-            detections = [
-                d for d in detections
-                if d["detection_type"] == detection_type
-            ]
+            detections = [d for d in detections if d["detection_type"] == detection_type]
 
         return detections
 
@@ -359,7 +339,7 @@ class AuditLogger:
             >>> high_risk = logger.get_high_risk_events(threshold=0.8)
         """
         return [
-            entry for entry in self._log_entries
-            if entry["event_type"] == "scan"
-            and entry["risk_score"] > threshold
+            entry
+            for entry in self._log_entries
+            if entry["event_type"] == "scan" and entry["risk_score"] > threshold
         ]
